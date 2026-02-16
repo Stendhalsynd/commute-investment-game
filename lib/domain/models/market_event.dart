@@ -2,6 +2,9 @@ class MarketEvent {
   final String id;
   final String title;
   final String description;
+  final String? scenarioType;
+  final String? historicalTag;
+  final bool isSynthetic;
   final double impactMin;
   final double impactMax;
   final List<String> appliesTo;
@@ -12,6 +15,9 @@ class MarketEvent {
     required this.id,
     required this.title,
     required this.description,
+    this.scenarioType,
+    this.historicalTag,
+    this.isSynthetic = false,
     required this.impactMin,
     required this.impactMax,
     required this.appliesTo,
@@ -30,6 +36,9 @@ class MarketEvent {
       'id': id,
       'title': title,
       'description': description,
+      'scenarioType': scenarioType,
+      'historicalTag': historicalTag,
+      'isSynthetic': isSynthetic,
       'impactMin': impactMin,
       'impactMax': impactMax,
       'appliesTo': appliesTo,
@@ -43,6 +52,9 @@ class MarketEvent {
       id: map['id'] as String,
       title: map['title'] as String,
       description: map['description'] as String,
+      scenarioType: map['scenarioType'] as String?,
+      historicalTag: map['historicalTag'] as String?,
+      isSynthetic: map['isSynthetic'] as bool? ?? false,
       impactMin: (map['impactMin'] as num).toDouble(),
       impactMax: (map['impactMax'] as num).toDouble(),
       appliesTo: List<String>.from(map['appliesTo'] as List),

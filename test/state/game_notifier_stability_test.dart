@@ -50,6 +50,7 @@ String _selectAffordableOptionId(GameNotifier notifier) {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   group('GameNotifier stability and recovery', () {
     test('10-round start->choose->resolve->next round loop runs without state errors', () async {
       final analytics = _CapturingAnalyticsSink();

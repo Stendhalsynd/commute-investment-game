@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:commute_investment_game/domain/state/game_flow_state.dart';
 import 'package:commute_investment_game/domain/models/game_state.dart';
+import 'package:commute_investment_game/domain/interfaces/investment_engine.dart';
 import 'package:commute_investment_game/domain/services/investment_engine.dart';
 
 void main() {
@@ -86,6 +87,87 @@ void main() {
       expect(state.day, equals(2));
       expect(state.mission, equals('first_choice'));
       expect(state.flowState, equals(GameFlowState.CHOICE));
+    });
+
+    test('speed scenario mode sets scenario context and insight', () {
+      final engine = DefaultInvestmentEngine(
+        playerId: 'p1',
+        initialState: GameState.initial(playerId: 'p1'),
+        random: Random(1),
+      );
+
+      engine.startRound(
+        1,
+        scenarioMode: InvestmentScenarioMode.speedScenario,
+      );
+      expect(engine.currentScenarioMode, equals(InvestmentScenarioMode.speedScenario));
+      expect(engine.currentScenarioId(), isNotNull);
+      expect(engine.currentScenarioId(), isNotEmpty);
+      expect(engine.currentEvent(), isNotNull);
+      final option = engine.currentOptions().first;
+
+      engine.choose(option.id);
+      final result = engine.resolve();
+
+      expect(result.scenarioMode, equals('speedScenario'));
+      expect(result.scenarioId, isNotNull);
+      expect(result.scenarioId, isNotEmpty);
+      expect(result.insight.trim(), isNotEmpty);
+    });
+
+    test('hold from choice keeps assets and marks round skipped', () {
+      final engine = DefaultInvestmentEngine(
+        playerId: 'p1',
+        initialState: GameState.initial(playerId: 'p1'),
+        random: Random(1),
+      );
+
+      engine.startRound(1);
+      final before = engine.snapshot();
+      final result = engine.hold();
+
+      expect(result.scenarioMode, equals(InvestmentScenarioMode.realTime.name));
+      expect(result.xpDelta, equals(0));
+      expect(result.profitLoss, equals(0));
+      expect(result.reason, contains('관망'));
+      expect(engine.state, equals(GameFlowState.POST_REVIEW));
+      expect(engine.snapshot().flowState, equals(GameFlowState.POST_REVIEW));
+      expect(engine.snapshot().cash, equals(before.cash));
+      expect(engine.snapshot().mission, isNull);
+    });
+
+    test('support-beginner hold policy gives positive xp reward', () {
+      final engine = DefaultInvestmentEngine(
+        playerId: 'p1',
+        initialState: GameState.initial(playerId: 'p1'),
+        random: Random(1),
+      );
+
+      engine.setHoldPolicy(HoldPolicy.supportBeginner);
+      engine.startRound(1);
+      final result = engine.hold();
+
+      expect(result.xpDelta, equals(2));
+      expect(engine.snapshot().xp, equals(2));
+    });
+
+    test('punish-hesitation hold policy applies gentle penalty', () {
+      final initial = GameState.initial(playerId: 'p1').copyWith(
+        xp: 10,
+        clearMission: true,
+      );
+      final engine = DefaultInvestmentEngine(
+        playerId: 'p1',
+        initialState: initial,
+        random: Random(1),
+      );
+
+      engine.setHoldPolicy(HoldPolicy.punishHesitation);
+      engine.startRound(3);
+      final result = engine.hold();
+
+      expect(result.xpDelta, equals(-2));
+      expect(engine.snapshot().xp, equals(8));
     });
   });
 }

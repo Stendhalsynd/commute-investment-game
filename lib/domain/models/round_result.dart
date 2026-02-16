@@ -7,6 +7,9 @@ class RoundResult {
   final double profitLoss;
   final int xpDelta;
   final String reason;
+  final String insight;
+  final String scenarioMode;
+  final String? scenarioId;
   final DateTime timeStamp;
 
   const RoundResult({
@@ -16,6 +19,9 @@ class RoundResult {
     required this.profitLoss,
     required this.xpDelta,
     required this.reason,
+    required this.insight,
+    required this.scenarioMode,
+    this.scenarioId,
     required this.timeStamp,
   });
 
@@ -27,6 +33,9 @@ class RoundResult {
       'profitLoss': profitLoss,
       'xpDelta': xpDelta,
       'reason': reason,
+      'insight': insight,
+      'scenarioMode': scenarioMode,
+      'scenarioId': scenarioId,
       'timeStamp': timeStamp.toIso8601String(),
     };
   }
@@ -39,6 +48,10 @@ class RoundResult {
       profitLoss: (map['profitLoss'] as num).toDouble(),
       xpDelta: map['xpDelta'] as int,
       reason: map['reason'] as String,
+      insight: map['insight'] as String? ??
+          '자동 분석 결과가 아직 준비되지 않았습니다.',
+      scenarioMode: map['scenarioMode'] as String? ?? 'realTime',
+      scenarioId: map['scenarioId'] as String?,
       timeStamp: DateTime.parse(map['timeStamp'] as String),
     );
   }
