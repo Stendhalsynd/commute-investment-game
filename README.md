@@ -30,3 +30,5 @@ A Flutter MVP for an offline, single-device mini-game optimized for short commut
 
 ## 현재 상태
 - MVP 단일 루프 구현 및 저장/복구, 안정성 테스트 골격/보강이 완료된 상태입니다.
+
+- Repository now includes the implementation and governance docs from local workspace sync as baseline on main.
