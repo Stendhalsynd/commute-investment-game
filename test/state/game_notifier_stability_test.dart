@@ -1,9 +1,9 @@
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-import '../../lib/analytics/interfaces/analytics_sink.dart';
-import '../../lib/data/repositories/memory_session_repository.dart';
-import '../../lib/domain/models/game_flow_state.dart';
-import '../../lib/state/game_notifier.dart';
+import 'package:commute_investment_game/analytics/interfaces/analytics_sink.dart';
+import 'package:commute_investment_game/data/repositories/memory_session_repository.dart';
+import 'package:commute_investment_game/domain/state/game_flow_state.dart';
+import 'package:commute_investment_game/state/game_notifier.dart';
 
 class _CapturingAnalyticsSink implements IAnalyticsSink {
   final List<String> events = [];

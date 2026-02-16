@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../analytics/interfaces/analytics_sink.dart';
 import '../data/interfaces/session_repository.dart';
 import '../domain/interfaces/investment_engine.dart';
-import '../domain/models/game_flow_state.dart';
+import '../domain/state/game_flow_state.dart';
 import '../domain/models/game_state.dart';
 import '../domain/services/investment_engine.dart';
 import 'game_session.dart';
@@ -159,8 +159,8 @@ class GameNotifier extends StateNotifier<GameSession> {
         _startRoundTimer();
         _engine.startRound(nextDay);
         state = state.copyWith(
-          lastResult: null,
-          lastRoundMs: null,
+          clearLastResult: true,
+          clearLastRoundMs: true,
           statusMessage: '다음 라운드 준비',
         );
         state = _withEngine();

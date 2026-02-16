@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-import '../../lib/data/repositories/file_session_repository.dart';
-import '../../lib/domain/models/game_flow_state.dart';
-import '../../lib/domain/models/game_state.dart';
-import '../../lib/domain/models/risk_profile.dart';
+import 'package:commute_investment_game/data/repositories/file_session_repository.dart';
+import 'package:commute_investment_game/domain/state/game_flow_state.dart';
+import 'package:commute_investment_game/domain/models/game_state.dart';
+import 'package:commute_investment_game/domain/models/risk_profile.dart';
 
 void main() {
   group('FileSessionRepository', () {
@@ -35,7 +35,7 @@ void main() {
         cash: 9800,
         xp: 12,
         streak: 3,
-        mission: null,
+        clearMission: true,
         flowState: GameFlowState.POST_REVIEW,
       );
       await repository.save(updated);

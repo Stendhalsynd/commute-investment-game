@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-import '../../lib/domain/models/game_flow_state.dart';
-import '../../lib/domain/models/game_state.dart';
-import '../../lib/domain/services/investment_engine.dart';
+import 'package:commute_investment_game/domain/state/game_flow_state.dart';
+import 'package:commute_investment_game/domain/models/game_state.dart';
+import 'package:commute_investment_game/domain/services/investment_engine.dart';
 
 void main() {
   group('DefaultInvestmentEngine', () {
@@ -56,7 +56,7 @@ void main() {
     test('resolve transitions to post-review and keeps streak valid', () {
       final engine = DefaultInvestmentEngine(
         playerId: 'p1',
-        initialState: GameState.initial(playerId: 'p1', initialCash: 2),
+        initialState: GameState.initial(playerId: 'p1', initialCash: 500),
         random: Random(42),
       );
       engine.startRound(1);

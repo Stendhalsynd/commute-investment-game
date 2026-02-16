@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../state/game_providers.dart';
-import '../../domain/models/game_flow_state.dart';
+import '../../domain/state/game_flow_state.dart';
 import '../../state/game_session.dart';
 
 class GameScreen extends ConsumerWidget {

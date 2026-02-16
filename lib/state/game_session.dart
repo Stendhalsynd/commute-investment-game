@@ -52,6 +52,8 @@ class GameSession {
     String? statusMessage,
     int? lastRoundMs,
     bool clearError = false,
+    bool clearLastResult = false,
+    bool clearLastRoundMs = false,
   }) {
     return GameSession(
       isLoading: isLoading ?? this.isLoading,
@@ -61,9 +63,9 @@ class GameSession {
       gameState: gameState ?? this.gameState,
       currentEvent: currentEvent ?? this.currentEvent,
       currentOptions: currentOptions ?? this.currentOptions,
-      lastResult: lastResult ?? this.lastResult,
+      lastResult: clearLastResult ? null : (lastResult ?? this.lastResult),
       statusMessage: statusMessage ?? this.statusMessage,
-      lastRoundMs: lastRoundMs ?? this.lastRoundMs,
+      lastRoundMs: clearLastRoundMs ? null : (lastRoundMs ?? this.lastRoundMs),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import '../models/game_flow_state.dart';
+import '../state/game_flow_state.dart';
 import '../models/game_state.dart';
 import '../models/investment_option.dart';
 import '../models/market_event.dart';
@@ -102,15 +102,12 @@ class DefaultInvestmentEngine implements IInvestmentEngine {
 
   @override
   void startRound(int day, {RiskProfile? overrideProfile}) {
+    // Allow starting a new round from IDLE, READY, or POST_REVIEW.
+    // Reject if currently in SIMULATE, CHOICE, or RESULT (mid-round states).
     if (_state.flowState == GameFlowState.SIMULATE ||
         _state.flowState == GameFlowState.CHOICE ||
-        _state.flowState == GameFlowState.RESULT ||
-        _state.flowState == GameFlowState.POST_REVIEW) {
-      // Keep engine strict: must be in IDLE or READY for new round
-      if (_state.flowState != GameFlowState.IDLE &&
-          _state.flowState != GameFlowState.READY) {
-        throw StateError('Round can only start from IDLE or READY');
-      }
+        _state.flowState == GameFlowState.RESULT) {
+      throw StateError('Round can only start from IDLE, READY, or POST_REVIEW');
     }
 
     _previousState = _state;
@@ -181,7 +178,7 @@ class DefaultInvestmentEngine implements IInvestmentEngine {
       streak: profitLoss >= 0 ? _state.streak + 1 : 0,
       xp: _state.xp + xpDelta + missionReward,
       portfolio: updatedPortfolio,
-      mission: null,
+      clearMission: true,
     );
 
     final result = RoundResult(

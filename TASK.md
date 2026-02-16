@@ -14,6 +14,13 @@
 | T10 | 저장/복구 수동 시나리오 검증 | QA | P0 | DONE | T5,T7 | QA 체크리스트, test/domain/*, test/data/session_repository_test.dart | T12으로 인수 조건 전달 | 없음 |
 | T11 | 라운드 핵심 경로 통합 테스트 | QA | P0 | DONE | T4,T8 | test/domain/*, test/widget/* | 기능 합격 판정 | T4,T8 |
 | T12 | 성능/안정성 기본 점검 (기능 우선 범위) | QA | P1 | DONE | T11 | QA 체크리스트, test/state/game_notifier_stability_test.dart | QA 보고 | 없음 |
+| T13 | 웹 포트포워딩 검증 가이드 문서화 | Spec | P1 | DONE | T1 | SPEC.md | T14 | 없음 |
+| T14 | 웹 실행/포워딩 체크리스트 정합성 업데이트 | QA | P1 | DONE | T13 | QA_CHECKLIST.md, TASK.md | T15 | T13 |
+| T15 | Termius/Tailscale 포트포워딩 규칙 실행 규격 정리 | QA | P1 | DONE | T14 | SPEC.md, TASK.md | T16 | T14 |
+| T16 | 모바일 브라우저 원격 웹 검증 수행 | QA | P1 | IN_PROGRESS | T15 | QA_RESULTS.md, QA_CHECKLIST.md | 다음 릴리스 계획 반영 | T15 |
+| T17 | pubspec.yaml 생성 및 웹 플랫폼 활성화 | Client | P0 | DONE | T1 | pubspec.yaml, web/ | T18 | 없음 |
+| T18 | 웹 검증 시 발견 버그 5건 수정 | Domain/Client | P0 | DONE | T17 | lib/domain/services/*, lib/state/*, test/** | T19 | T17 |
+| T19 | 웹 브라우저 게임 흐름 검증 (DAY 전환 포함) | QA | P0 | DONE | T18 | QA_RESULTS.md | T16 완료 조건 연결 | T18 |
 
 ## 진행 규칙
 - 상태 갱신은 단계 종료 시점 또는 블로커 발생 시 즉시 반영한다.
